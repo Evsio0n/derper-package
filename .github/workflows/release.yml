@@ -83,7 +83,7 @@ jobs:
           tar -xf /tmp/goreleaser.tar.gz -C /tmp
           sudo mv /tmp/goreleaser /usr/local/bin/goreleaser
           sudo chmod +x /usr/local/bin/goreleaser
-          goreleaser release --clean --auto-snapshot=false
+          goreleaser release --clean --auto-snapshot=false -c ../.goreleaser.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
