@@ -70,6 +70,12 @@ jobs:
           echo "GOPATH=$GOPATH" >> $GITHUB_ENV
           echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
 
+      - name: Checkout Tailscale
+        run: |
+          git clone https://github.com/tailscale/tailscale.git
+          cd tailscale
+          git checkout ${{ needs.check-version.outputs.latest_version }}
+
       - name: Debug environment
         run: |
           echo "GOPATH: $GOPATH"

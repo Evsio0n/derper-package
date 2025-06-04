@@ -2,6 +2,7 @@ version: 2
 
 builds:
   - id: derper
+    main: ./tailscale/cmd/derper
     binary: derper
     env:
       - CGO_ENABLED=0
@@ -14,12 +15,8 @@ builds:
     ignore:
       - goos: darwin
         goarch: arm64
-    hooks:
-      pre: |
-        go install tailscale.com/cmd/derper@{{ .Env.DERPER_VERSION }}
-      post: |
-        cp $GOPATH/bin/derper {{ .Path }}
     no_unique_dist_dir: true
+
 
 archives:
   - format: tar.gz
