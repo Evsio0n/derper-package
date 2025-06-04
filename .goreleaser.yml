@@ -53,8 +53,7 @@ nfpms:
 release:
   name_template: "{{ .ProjectName }} {{ .Version }}"
   extra_files:
-    - src: packaging/derper.service
-      dst: derper.service
+    - glob: packaging/derper.service
 
 changelog:
   sort: asc
