@@ -47,18 +47,11 @@ nfpms:
         systemctl daemon-reload
         systemctl enable derper
         systemctl start derper
-      preuninstall: |
-        #!/bin/sh
-        systemctl stop derper
-        systemctl disable derper
 
 release:
-  draft: false
-  prerelease: false
   name_template: "{{ .ProjectName }} {{ .Version }}"
   extra_files:
-    - glob: packaging/derper.service
-      dst: derper.service
+    - packaging/derper.service
 
 changelog:
   sort: asc
