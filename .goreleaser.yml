@@ -18,6 +18,7 @@ builds:
     hooks:
       pre: |
         go install tailscale.com/cmd/derper@{{ .Env.DERPER_VERSION }}
+      post: |
         cp $GOPATH/bin/derper {{ .Path }}
 
 archives:
