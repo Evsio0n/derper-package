@@ -2,7 +2,7 @@ version: 2
 
 builds:
   - id: derper
-    main: ./tailscale/cmd/derper
+    main: ./workspace/tailscale/cmd/derper
     binary: derper
     env:
       - CGO_ENABLED=0

@@ -70,11 +70,14 @@ jobs:
           echo "GOPATH=$GOPATH" >> $GITHUB_ENV
           echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
 
-      - name: Checkout Tailscale
+      - name: Prepare workspace
         run: |
+          mkdir -p workspace
+          cd workspace
           git clone https://github.com/tailscale/tailscale.git
           cd tailscale
           git checkout ${{ needs.check-version.outputs.latest_version }}
+          cd ../..
 
       - name: Debug environment
         run: |
@@ -90,4 +93,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
-          GOPATH: ${{ env.GOPATH }} 
+          GOPATH: ${{ env.GOPATH }}
+          WORKSPACE_DIR: workspace 
