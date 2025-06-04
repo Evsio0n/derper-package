@@ -1,8 +1,10 @@
 version: 2
 
-
 builds:
-  - env:
+  - id: derper
+    binary: derper
+    main: tailscale.com/cmd/derper
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
@@ -13,8 +15,9 @@ builds:
     ignore:
       - goos: darwin
         goarch: arm64
-    binary: derper
-    dir: /home/runner/go/bin
+    hooks:
+      pre: |
+        go get tailscale.com/cmd/derper@{{ .Env.DERPER_VERSION }}
 
 archives:
   - format: tar.gz
