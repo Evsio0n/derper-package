@@ -1,3 +1,5 @@
+version: 2
+
 before:
   hooks:
     - go mod tidy
@@ -51,7 +53,8 @@ nfpms:
 release:
   name_template: "{{ .ProjectName }} {{ .Version }}"
   extra_files:
-    - packaging/derper.service
+    - src: packaging/derper.service
+      dst: derper.service
 
 changelog:
   sort: asc
