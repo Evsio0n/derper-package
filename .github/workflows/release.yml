@@ -64,6 +64,12 @@ jobs:
         with:
           go-version: '1.21'
 
+      - name: Set up GOPATH
+        run: |
+          mkdir -p $GOPATH/bin
+          echo "GOPATH=$GOPATH" >> $GITHUB_ENV
+          echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
@@ -71,4 +77,5 @@ jobs:
           args: release --clean --auto-snapshot=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }} 
+          DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
+          GOPATH: ${{ env.GOPATH }} 

@@ -17,7 +17,8 @@ builds:
         goarch: arm64
     hooks:
       pre: |
-        go get tailscale.com/cmd/derper@{{ .Env.DERPER_VERSION }}
+        go install tailscale.com/cmd/derper@{{ .Env.DERPER_VERSION }}
+        cp $GOPATH/bin/derper {{ .Path }}
 
 archives:
   - format: tar.gz
