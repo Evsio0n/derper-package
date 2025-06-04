@@ -1,8 +1,5 @@
 version: 2
 
-before:
-  hooks:
-    - go mod tidy
 
 builds:
   - env:
@@ -16,9 +13,8 @@ builds:
     ignore:
       - goos: darwin
         goarch: arm64
-    ldflags:
-      - -s -w
-      - -X github.com/tailscale/derper/version.Version={{ .Version }}
+    binary: derper
+    dir: $GOPATH/bin
 
 archives:
   - format: tar.gz
