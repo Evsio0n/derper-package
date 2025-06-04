@@ -64,6 +64,12 @@ jobs:
         with:
           go-version: '1.21'
 
+      - name: Set up GOPATH
+        run: |
+          mkdir -p $GOPATH/bin
+          echo "GOPATH=$GOPATH" >> $GITHUB_ENV
+          echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
+
       - name: Install derper
         run: go install tailscale.com/cmd/derper@${{ needs.check-version.outputs.latest_version }}
 
@@ -73,4 +79,5 @@ jobs:
           version: latest
           args: release --clean --auto-snapshot=false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOPATH: ${{ env.GOPATH }} 
