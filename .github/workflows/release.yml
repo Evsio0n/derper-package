@@ -79,6 +79,10 @@ jobs:
       - name: Run GoReleaser
         run: |
           cd tailscale
+          curl -sL -o /tmp/goreleaser.tar.gz https://github.com/goreleaser/goreleaser/releases/download/v2.9.0/goreleaser_Linux_x86_64.tar.gz
+          tar -xf /tmp/goreleaser.tar.gz -C /tmp
+          sudo mv /tmp/goreleaser /usr/local/bin/goreleaser
+          sudo chmod +x /usr/local/bin/goreleaser
           goreleaser release --clean --auto-snapshot=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
