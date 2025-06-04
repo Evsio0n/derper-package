@@ -3,7 +3,6 @@ version: 2
 builds:
   - id: derper
     binary: derper
-    main: tailscale.com/cmd/derper
     env:
       - CGO_ENABLED=0
     goos:
@@ -20,6 +19,8 @@ builds:
         go install tailscale.com/cmd/derper@{{ .Env.DERPER_VERSION }}
       post: |
         cp $GOPATH/bin/derper {{ .Path }}
+    no_unique_dist_dir: true
+    skip: true
 
 archives:
   - format: tar.gz

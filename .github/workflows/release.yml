@@ -70,6 +70,12 @@ jobs:
           echo "GOPATH=$GOPATH" >> $GITHUB_ENV
           echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
 
+      - name: Debug environment
+        run: |
+          echo "GOPATH: $GOPATH"
+          echo "PATH: $PATH"
+          echo "DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}"
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
