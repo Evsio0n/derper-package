@@ -1,9 +1,6 @@
 before:
   hooks:
     - go mod tidy
-    - cmd: |
-        curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | grep tag_name | cut -d '"' -f 4 > .version
-        echo "Latest Tailscale version: $(cat .version)"
 
 builds:
   - env:
@@ -54,6 +51,14 @@ nfpms:
         #!/bin/sh
         systemctl stop derper
         systemctl disable derper
+
+release:
+  draft: false
+  prerelease: false
+  name_template: "{{ .ProjectName }} {{ .Version }}"
+  extra_files:
+    - glob: packaging/derper.service
+      dst: derper.service
 
 changelog:
   sort: asc
