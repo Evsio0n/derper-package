@@ -20,7 +20,6 @@ builds:
       post: |
         cp $GOPATH/bin/derper {{ .Path }}
     no_unique_dist_dir: true
-    skip: true
 
 archives:
   - format: tar.gz
