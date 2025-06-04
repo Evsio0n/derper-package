@@ -2,7 +2,7 @@ version: 2
 
 builds:
   - id: derper
-    main: ./cmd/derper
+    main: tailscale/cmd/derper
     binary: derper
     env:
       - CGO_ENABLED=0
