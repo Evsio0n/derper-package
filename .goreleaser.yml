@@ -1,0 +1,66 @@
+before:
+  hooks:
+    - go mod tidy
+    - cmd: |
+        curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | grep tag_name | cut -d '"' -f 4 > .version
+        echo "Latest Tailscale version: $(cat .version)"
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: darwin
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X github.com/tailscale/derper/version.Version={{ .Version }}
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+nfpms:
+  - maintainer: "Tailscale <info@tailscale.com>"
+    homepage: "https://github.com/tailscale/derper"
+    license: "MIT"
+    description: "DERP (Designated Encrypted Relay for Packets) server"
+    vendor: "Tailscale"
+    formats:
+      - deb
+      - rpm
+    dependencies:
+      - ca-certificates
+    scripts:
+      postinstall: |
+        #!/bin/sh
+        systemctl daemon-reload
+        systemctl enable derper
+        systemctl start derper
+      preuninstall: |
+        #!/bin/sh
+        systemctl stop derper
+        systemctl disable derper
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - Merge pull request
+      - Merge branch 

@@ -1,0 +1,14 @@
+[Unit]
+Description=DERP (Designated Encrypted Relay for Packets) server
+After=network.target
+
+[Service]
+Type=simple
+User=derper
+Group=derper
+ExecStart=/usr/bin/derper -c /etc/derper/derper.conf
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target 
