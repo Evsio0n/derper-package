@@ -20,7 +20,7 @@ builds:
     
 
 archives:
-  - format: [ "tar.gz" ]
+  - format: tar.gz
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
