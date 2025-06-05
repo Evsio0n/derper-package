@@ -2,7 +2,7 @@ version: 2
 
 builds:
   - id: derper
-    main: ./cmd/derper
+    main: ./tailscale/cmd/derper
     binary: derper
     env:
       - CGO_ENABLED=0
@@ -20,7 +20,7 @@ builds:
     
 
 archives:
-  - format: tar.gz
+  - format: [ "tar.gz" ]
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_

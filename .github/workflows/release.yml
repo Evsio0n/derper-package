@@ -91,8 +91,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          args: release --clean --skip=validate
-          workdir: tailscale
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
