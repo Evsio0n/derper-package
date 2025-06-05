@@ -67,7 +67,7 @@ jobs:
 
       - name: Prepare workspace
         run: |
-          git clone https://github.com/tailscale/tailscale.git -b ${{ needs.check-version.outputs.latest_version }}
+          git clone https://github.com/tailscale/tailscale.git --branch ${{ needs.check-version.outputs.latest_version }} --depth 1 tailscale
 
 
       - name: Debug environment

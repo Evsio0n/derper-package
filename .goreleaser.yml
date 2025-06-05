@@ -16,7 +16,7 @@ builds:
       - goos: darwin
         goarch: arm64
     no_unique_dist_dir: true
-
+    
 
 archives:
   - format: tar.gz
