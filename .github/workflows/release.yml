@@ -76,7 +76,7 @@ jobs:
           git clone https://github.com/tailscale/tailscale.git --branch ${{ needs.check-version.outputs.latest_version }} --depth 1 tailscale
           cp .goreleaser.yml tailscale/.goreleaser.yml
           cp -r packaging tailscale/packaging
-          
+
           cd tailscale
           
 
@@ -92,7 +92,7 @@ jobs:
         with:
           distribution: goreleaser
           args: release --clean
-        working-directory: tailscale
+          workdir: tailscale
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
