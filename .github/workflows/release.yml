@@ -64,7 +64,7 @@ jobs:
           echo "GOPATH=$GOPATH" >> $GITHUB_ENV
           echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
           echo $(pwd)
-          cd derper-package
+
 
       - name: Prepare workspace
         run: |
@@ -82,7 +82,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          args: release --clean --skip validate
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
