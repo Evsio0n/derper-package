@@ -63,11 +63,13 @@ jobs:
           mkdir -p $GOPATH/bin
           echo "GOPATH=$GOPATH" >> $GITHUB_ENV
           echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
-          echo $(PWD)
+          echo $(pwd)
+          cd derper-package
 
       - name: Prepare workspace
         run: |
           git clone https://github.com/tailscale/tailscale.git --branch ${{ needs.check-version.outputs.latest_version }} --depth 1 tailscale
+          
 
 
       - name: Debug environment
