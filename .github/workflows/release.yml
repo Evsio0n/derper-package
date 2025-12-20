@@ -74,10 +74,7 @@ jobs:
       - name: Prepare workspace
         run: |
           git clone https://github.com/tailscale/tailscale.git --branch ${{ needs.check-version.outputs.latest_version }} --depth 1 tailscale
-          cp .goreleaser.yml tailscale/.goreleaser.yml
-          cp -r packaging tailscale/packaging
-
-          cd tailscale
+          echo "Cloned tailscale at ${{ needs.check-version.outputs.latest_version }}"
           
 
 
@@ -91,8 +88,9 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          args: release --clean
+          args: release --clean --config ../.goreleaser.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
           GOPATH: ${{ env.GOPATH }} 
+          GORELEASER_CURRENT_TAG: ${{ needs.check-version.outputs.latest_version }}
