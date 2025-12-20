@@ -98,10 +98,9 @@ jobs:
 
       - name: Set up GOPATH
         run: |
-          mkdir -p $GOPATH/bin
-          echo "GOPATH=$GOPATH" >> $GITHUB_ENV
-          echo "PATH=$GOPATH/bin:$PATH" >> $GITHUB_ENV
-          echo $(pwd)
+          mkdir -p "$HOME/go/bin"
+          echo "GOPATH=$HOME/go" >> $GITHUB_ENV
+          echo "$HOME/go/bin" >> $GITHUB_PATH
 
 
       - name: Prepare workspace
@@ -128,3 +127,4 @@ jobs:
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
           GOPATH: ${{ env.GOPATH }} 
           GORELEASER_CURRENT_TAG: ${{ needs.check-version.outputs.latest_version }}
+          REPO_ROOT: ${{ github.workspace }}

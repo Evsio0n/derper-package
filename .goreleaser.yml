@@ -43,14 +43,17 @@ nfpms:
     dependencies:
       - ca-certificates
     scripts:
-      postinstall: ../packaging/post-install.sh
+      postinstall: "{{ .Env.REPO_ROOT }}/packaging/post-install.sh"
+    contents:
+      - src: "{{ .Env.REPO_ROOT }}/packaging/derper.service"
+        dst: /lib/systemd/system/derper.service
 release:
   github:
     owner: Evsio0n
     name: derper-package
   name_template: "{{ .ProjectName }} {{ .Version }}"
-  extra_files:
-    - glob: ../packaging/derper.service
+  # extra_files:
+  #   - glob: ../packaging/derper.service
 
 changelog:
   sort: asc
