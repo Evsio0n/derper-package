@@ -20,7 +20,7 @@ builds:
     
 
 archives:
-  - format: tar.gz
+  - formats: [ 'tar.gz']
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -29,7 +29,7 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [ 'zip' ]
 
 nfpms:
   - maintainer: "Tailscale <info@tailscale.com>"
@@ -43,11 +43,11 @@ nfpms:
     dependencies:
       - ca-certificates
     scripts:
-      postinstall: packaging/post-install.sh
+      postinstall: ../packaging/post-install.sh
 release:
   name_template: "{{ .ProjectName }} {{ .Version }}"
   extra_files:
-    - glob: packaging/derper.service
+    - glob: ../packaging/derper.service
 
 changelog:
   sort: asc
