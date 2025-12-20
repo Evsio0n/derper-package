@@ -106,10 +106,10 @@ jobs:
 
       - name: Prepare workspace
         run: |
-          git clone https://github.com/tailscale/tailscale.git --branch ${{ needs.check-version.outputs.latest_version }} --depth 1 --no-single-branch --tags tailscale
+          git clone https://github.com/tailscale/tailscale.git --branch ${{ needs.check-version.outputs.latest_version }} --depth 1 tailscale
+          cd tailscale
+          git fetch --force --tags
           echo "Cloned tailscale at ${{ needs.check-version.outputs.latest_version }}"
-          
-
 
       - name: Debug environment
         run: |

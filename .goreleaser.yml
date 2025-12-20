@@ -45,6 +45,9 @@ nfpms:
     scripts:
       postinstall: ../packaging/post-install.sh
 release:
+  github:
+    owner: Evsio0n
+    name: derper-package
   name_template: "{{ .ProjectName }} {{ .Version }}"
   extra_files:
     - glob: ../packaging/derper.service
