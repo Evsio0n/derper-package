@@ -40,11 +40,44 @@ jobs:
 
       - name: Create new release
         if: steps.check_version.outputs.should_release == 'true'
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git tag ${{ steps.get_version.outputs.latest_version }}
-          git push origin ${{ steps.get_version.outputs.latest_version }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = `${{ steps.get_version.outputs.latest_version }}`;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const ref = `tags/${tag}`;
+
+            // Create an annotated tag object + tag ref, then a GitHub release.
+            // This avoids `git push` restrictions around modifying workflow files.
+            const sha = context.sha;
+            core.info(`Creating tag ${tag} at ${sha}`);
+
+            const tagObj = await github.rest.git.createTag({
+              owner,
+              repo,
+              tag,
+              message: tag,
+              object: sha,
+              type: 'commit',
+            });
+
+            await github.rest.git.createRef({
+              owner,
+              repo,
+              ref: `refs/${ref}`,
+              sha: tagObj.data.sha,
+            });
+
+            await github.rest.repos.createRelease({
+              owner,
+              repo,
+              tag_name: tag,
+              name: tag,
+              draft: false,
+              prerelease: false,
+              generate_release_notes: true,
+            });
 
   goreleaser:
     needs: check-version
@@ -89,6 +122,7 @@ jobs:
         with:
           distribution: goreleaser
           args: release --clean --config ../.goreleaser.yml
+          workdir: tailscale
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DERPER_VERSION: ${{ needs.check-version.outputs.latest_version }}
