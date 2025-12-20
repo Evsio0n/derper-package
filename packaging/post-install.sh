@@ -8,22 +8,23 @@ fi
 
 mkdir -p /etc/derper
 
+
 if getent group derper >/dev/null 2>&1; then
-	# echo "Group derper already exists"
+	true
 else
 	echo "Add group derper"
 	groupadd derper
 fi
 
 if id -u derper >/dev/null 2>&1; then
-	# echo "User derper already exists"
+	true
 else
 	echo "Add user derper"
 	useradd -m -g derper derper
 fi
 
 if id -nG derper 2>/dev/null | tr ' ' '\n' | grep -qx derper; then
-	# echo "User derper already in group derper"
+	true
 else
 	echo "Add user derper to group derper"
 	usermod -aG derper derper
